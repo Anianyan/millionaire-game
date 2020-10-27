@@ -1,3 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: 'game#welcome'
+
+  resources :questions do
+    resources :answers, only: [:index, :create, :destroy, :update]
+  end
+
+  resources :game, only: [:new]
+
+  get '/new-game', to: 'game#new_game'
 end

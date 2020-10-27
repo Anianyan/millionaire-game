@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MillionaireGame</title>
+    <title>Millionaire-Game</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -12,4 +14,6 @@
   <body>
     <%= yield %>
   </body>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </html>
