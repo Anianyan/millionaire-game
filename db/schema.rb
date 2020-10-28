@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_10_27_094112) do
 
   create_table "questions", force: :cascade do |t|
     t.string "question_text", null: false
-    t.string "type"
+    t.string "level"
     t.integer "score"
     t.integer "answers_count"
     t.datetime "created_at", precision: 6, null: false
