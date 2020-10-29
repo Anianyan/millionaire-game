@@ -2,6 +2,7 @@ const game = {
 
     init: function() {
         const questionId = document.getElementById('question').getAttribute('data-question-id');
+        this.questionsIds = [];
         this.questionNumber = 1;
         sendAjaxRequest({
             url: `/questions/${questionId}`,
@@ -9,6 +10,7 @@ const game = {
             success: (data) => {
                 // Init question data.
                 game.question = data;
+                game.questionsIds.push(data.id);
             }
         });
     },
@@ -26,10 +28,12 @@ const game = {
             method: 'POST',
             data: {
                 level: this?.question?.level,
+                question_ids: game.questionsIds
             },
             success: (question) => {
                 // Init question data.
                 game.question = question;
+                game.questionsIds.push(question.id);
 
                 $('#question-text').text('');
                 $('#question-text').append(`<span class="label label-warning" id="qid">${++this.questionNumber}</span>${question.question_text}`);
@@ -58,6 +62,31 @@ const game = {
         element.classList.remove('text-danger');
         element.classList.add('text-success');
         element.innerHTML = message;
+    },
+
+    showCorrectAnswer: function() {
+        sendAjaxRequest({
+            url: `/questions/${game.question.id}/answers/correct`,
+            method: 'GET',
+            success: (answers) => {
+                const answersList = answers?.map((answer) => (
+                    answer.answer_text
+                )).join(' ');
+
+                $('#correct-answer').text(`Correct Answer: ${answersList}`);
+            }
+        });
+    },
+
+    endGame() {
+        if (this.questionNumber >= 5) {
+            document.getElementById('question').classList.add('hide');
+            document.getElementById('end-game').classList.remove('hide');
+
+            return true;
+        }
+
+        return false;
     }
 }
 
@@ -91,7 +120,6 @@ $(document).ready(function() {
             method: 'GET',
             beforeSend: () => {
                 $('#loadbar').show();
-                $('#question').fadeOut();
             },
             success: (data) => {
                 if (data.is_correct) {
@@ -100,12 +128,11 @@ $(document).ready(function() {
                 } else {
                     // User fail
                     game.showErrorMessage('Wrong :(');
+                    game.showCorrectAnswer();
                 }
 
-                game.setNewQuestion();
-
                 $('#loadbar').hide();
-                $('#question').fadeIn();
+                $('#next-btn').removeClass('hide');
             },
             error: () => {
                 game.showErrorMessage('Something went Wrong!');
@@ -115,5 +142,14 @@ $(document).ready(function() {
         });
     });
 
+    $(document).on('click', '#next-btn', function() {
+        $('#next-btn').addClass('hide');
+        $('#answer').text('');
+        $('#correct-answer').text('');
+
+        if(!game.endGame()) {
+            game.setNewQuestion();
+        }
+    });
 });
 

@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <div class="row">
-        <h4 class="text-center">Score: <span id="game-score" >0</span></h4>
-    </div>
+   <div class="row">
+      <h4 class="text-center">Score: <span id="game-score" >0</span></h4>
+   </div>
    <div class="modal-dialog">
       <div class="modal-content" id="question" data-question-id="<%= @question.id %>">
          <div class="modal-header">
@@ -21,17 +21,28 @@
                </div>
             </div>
             <div class="quiz" id="quiz" data-toggle="buttons">
-                <% @question.answers.each do |answer| %>
-                    <label class="element-animation1 btn btn-lg btn-primary btn-block">
-                        <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
-                        <input class="answer-input" type="radio" data-id="<%= answer.id %>" name="answer" value="<%= answer.id %>"><%= answer.answer_text %>
-                    </label>
-                <% end %>
+               <% @question.answers.each do |answer| %>
+               <label class="element-animation1 btn btn-lg btn-primary btn-block">
+               <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
+               <input class="answer-input" type="radio" data-id="<%= answer.id %>" name="answer" value="<%= answer.id %>"><%= answer.answer_text %>
+               </label>
+               <% end %>
             </div>
          </div>
          <div class="modal-footer text-muted">
             <h4 id="answer"></h4>
+            <h4 id="correct-answer" class="text-info"></h4>
          </div>
+      </div>
+      <div id="next-btn" class="row hide">
+         <div class="form-group right mt-3">
+            <button type="button" class="btn btn-secondary">Next</button>
+            <div>
+            </div>
+         </div>
+      </div>
+      <div id="end-game" class="hide">
+         <h1 class="text-center">End Game</h1>
       </div>
    </div>
 </div>
