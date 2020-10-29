@@ -11,7 +11,11 @@ class GameController < ApplicationController
     def get_next
         @question = Question.where(level: next_level(params[:level])).where("answers_count > 2").first
         
-        render json: @question
+        render json: @question.to_json({
+            :include => {
+                :answers => { only: [:id, :answer_text] }
+            }
+        })
     end
 
     def next_level(level)

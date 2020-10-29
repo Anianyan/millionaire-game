@@ -30,7 +30,6 @@ const game = {
             success: (question) => {
                 // Init question data.
                 game.question = question;
-                console.log(question);
 
                 $('#question-text').text('');
                 $('#question-text').append(`<span class="label label-warning" id="qid">${++this.questionNumber}</span>${question.question_text}`);
@@ -40,9 +39,9 @@ const game = {
                 $('#quiz').append(question?.answers?.map((answer) => (
                     `<label class="element-animation1 btn btn-lg btn-primary btn-block">
                         <span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>
-                        <input class="answer-input" type="radio" data-id="${answer.id}>${answer_text}
+                        <input class="answer-input" type="radio" data-id="${answer.id}">${answer.answer_text}
                     </label>`
-                )));
+                )).join(''));
             }
         });
     },
@@ -78,7 +77,10 @@ function sendAjaxRequest(payload) {
 
 // Event Actions
 $(document).ready(function() {
-    game.init();
+    // Check game page
+    if ($('#question').length) {
+        game.init();
+    }
 
     // Handle select answer event.
     $(document).on('click', '.answer-input', function () {
