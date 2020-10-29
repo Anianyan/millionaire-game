@@ -1,7 +1,5 @@
 <div class="container-fluid">
-   <div class="row">
-      <h4 class="text-center">Score: <span id="game-score" >0</span></h4>
-   </div>
+   <h4 class="text-center">Score: <span id="game-score" >0</span></h4>
    <div class="modal-dialog">
       <div class="modal-content" id="question" data-question-id="<%= @question.id %>">
          <div class="modal-header">
@@ -29,20 +27,16 @@
                <% end %>
             </div>
          </div>
-         <div class="modal-footer text-muted">
+         <div class="modal-footer text-muted flex-column">
             <h4 id="answer"></h4>
             <h4 id="correct-answer" class="text-info"></h4>
-         </div>
-      </div>
-      <div id="next-btn" class="row hide">
-         <div class="form-group right mt-3">
-            <button type="button" class="btn btn-secondary">Next</button>
-            <div>
-            </div>
          </div>
       </div>
       <div id="end-game" class="hide">
          <h1 class="text-center">End Game</h1>
       </div>
+   </div>
+   <div id="next-btn" class="form-group text-right mt-3">
+      <button type="button" class="btn btn-primary">Next</button>
    </div>
 </div>
