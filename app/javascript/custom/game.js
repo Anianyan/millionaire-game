@@ -66,7 +66,7 @@ const game = {
 
     showCorrectAnswer: function() {
         sendAjaxRequest({
-            url: `/questions/${game.question.id}/answers/correct`,
+            url: `/questions/${game.question.id}/correct-answers`,
             method: 'GET',
             success: (answers) => {
                 const answersList = answers?.map((answer) => (

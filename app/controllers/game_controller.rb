@@ -1,5 +1,8 @@
 class GameController < ApplicationController
-    def wellcome
+    def welcome
+        unless current_user
+            redirect_to login_url
+        end
     end
 
     def new_game

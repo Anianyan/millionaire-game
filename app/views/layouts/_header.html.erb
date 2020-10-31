@@ -1,0 +1,6 @@
+<% if current_user %>
+    <div class="topnav">
+        <%= link_to "Top Best Scores", "/top-best-scores" %>
+        <%= link_to "Logout", logout_path, style: "float:right" %>
+    </div>
+<% end %>
