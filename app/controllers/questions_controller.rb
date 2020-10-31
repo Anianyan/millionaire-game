@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
     def show
-        @question = Question.find(params[:id])
+        _question = Question.find(params[:id])
 
-        render json: @question
+        render json: _question
     end
 end

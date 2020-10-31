@@ -1,13 +1,13 @@
 class AnswersController < ApplicationController
     def show
-        @answer = Answer.find(params[:id])
+        _answer = Answer.find(params[:id])
 
-        render json: @answer
+        render json: _answer
     end
 
     def get_correct
-        @answer = Answer.where(question_id: params[:question_id], is_correct: 1)
+        _answer = Answer.where(question_id: params[:question_id], is_correct: 1)
 
-        render json: @answer
+        render json: _answer
     end
 end

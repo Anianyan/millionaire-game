@@ -4,22 +4,19 @@ class GameController < ApplicationController
 
     def new_game
         # Send one easy question for start game
-        @offset = rand(Question.where(level: 'easy').count)
         @question = Question.where(level: 'easy')
-                            .offset(@offset)
+                            .order("RANDOM()")
                             .first
     end
 
     def get_next_question
-        @next_level = next_level(params[:level]);
-        @offset = rand(Question.where(level: @next_level).count)
-        @question = Question.where(level: @next_level)
+        _question = Question.where(level: next_level(params[:level]))
                             .where("answers_count > 2")
                             .where.not(id: params[:question_ids])
-                            .offset(@offset)
+                            .order("RANDOM()")
                             .first
         
-        render json: @question.to_json({
+        render json: _question.to_json({
             :include => {
                 :answers => { only: [:id, :answer_text] }
             }
