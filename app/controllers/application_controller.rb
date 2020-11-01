@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-    helper_method :current_user
+    protect_from_forgery
+    helper_method :current_user, :signed_in?, :is_admin?
 
     def current_user
         if session[:user_id]
@@ -7,5 +8,13 @@ class ApplicationController < ActionController::Base
         else
             @current_user = nil
         end
+    end
+
+    def signed_in?
+        !!current_user
+    end
+
+    def is_admin?
+        signed_in? ? current_user.role == 'admin' : false
     end
 end

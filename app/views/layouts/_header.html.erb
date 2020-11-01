@@ -1,6 +1,14 @@
-<% if current_user %>
+<% if signed_in? && !is_admin? %>
     <div class="topnav">
         <%= link_to "Top Best Scores", "/top-best-scores" %>
         <%= link_to "Logout", logout_path, style: "float:right" %>
+    </div>
+<% end %>
+<% if is_admin? %>
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
+        <h3 class="w3-bar-item">Dashboard</h3>
+        <%= link_to "Users", admin_users_url, class: "w3-bar-item w3-button" %>
+        <%= link_to "Questions", admin_questions_url, class: "w3-bar-item w3-button" %>
     </div>
 <% end %>

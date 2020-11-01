@@ -7,7 +7,14 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to home_page_url, notice: "Logged in!"
+
+      # Redirect admin dashboard
+      if user.role == 'admin'
+        redirect_url = admin_users_url
+      else
+        redirect_url = home_page_url;
+      end
+      redirect_to redirect_url
     else
       flash.now[:alert] = "Email or password is invalid"
       render "new"
