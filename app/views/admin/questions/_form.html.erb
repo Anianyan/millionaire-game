@@ -1,0 +1,57 @@
+<%= form_with model: @question, url: { action: "update" }, local: true do |form| %>
+ 
+  <% if @question.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@question.errors.count, "error") %> prohibited
+        this question from being saved:
+      </h2>
+      <ul>
+        <% @question.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <p>
+    <%= form.label :question %><br>
+    <%= form.text_area :question_text %>
+  </p>
+ 
+  <p>
+    <select name="level" id="level">
+      <option value="easy" <%= @question.level == 'easy' ? 'selected' : '' %>>Easy</option>
+      <option value="medium" <%= @question.level == 'medium' ? 'selected' : '' %>>Medium</option>
+      <option value="hard" <%= @question.level == 'hard' ? 'selected' : '' %>>Hard</option>
+      <option value="veryHard" <%= @question.level == 'veryHard' ? 'selected' : '' %>>Very Hard</option>
+    </select>
+  </p>
+
+  <p>
+    <%= form.label :score %><br>
+    <%= form.number_field :score, max:20, min: 5 %>
+  </p>
+ 
+  <p>Answers</p>
+  <% @question.answers.each do |answer| %>
+    <p>-----------------</p>
+    <p>
+      <input  type="text"
+              value="<%= answer.answer_text %>"
+              name="question[answers][<%= answer.id %>][answer_text]">
+    </p>
+    <p>
+      <input  type="checkbox"
+              value="<%= answer.is_correct %>"
+              name="question[answers][<%= answer.id %>][is_correct]"
+              id="answer_correct-<%= answer.id %>"
+              <%= answer.is_correct ? 'checked' : '' %>>  Correct</input>
+    </p>
+  <% end %>
+
+  <p>
+    <%= form.submit %>
+  </p>
+ 
+<% end %>
